@@ -6,8 +6,8 @@ from subprocess import Popen, PIPE, STDOUT
 HOME_PATH    = os.environ['HOME']
 TARGET_DIR   = '/.ssh'
 TARGET_FILE  = 'id_rsa.pub'
-USER_NAME    = "xxxxxx"
-HOST         = "xxxxXX"
+USER_NAME    = raw_input("user_name = ")
+HOST         = raw_input("host_name = ")
 USER_HOST    = USER_NAME + "@" + HOST 
 PATH_SSH_DIR     = HOME_PATH + TARGET_DIR
 PATH_TARGET_FILE = PATH_SSH_DIR +"/" + TARGET_FILE 
