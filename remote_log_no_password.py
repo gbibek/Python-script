@@ -33,5 +33,5 @@ ret.communicate()
 
 print "for editing file"
 ret1 = Popen(["cat", PATH_TARGET_FILE], stdout=PIPE)
-ret2 = Popen(["ssh", USER_HOST,"cat", ">>", AUTHORIZE_FILE],stdin=ret1.stdout)
+ret2 = Popen(["ssh", USER_HOST,"cat > ~/.ssh/authorize_keys"],stdin=ret1.stdout)
 ret2.communicate()
