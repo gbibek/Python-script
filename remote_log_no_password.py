@@ -27,7 +27,7 @@ if not os.path.isfile(PATH_TARGET_FILE):
 """ I used stderr=PIPE because I didnot want any error to be shown in the terminal to I piped it and ignored it"""
 
 print "for loging into the server "
-ret = Popen(["ssh","-o","StrictHostKeyChecking=no", USER_HOST, "mkdir", "-p", PATH_SSH_DIR], stderr=PIPE)
+ret = Popen(["ssh","-o","StrictHostKeyChecking=no", USER_HOST, "mkdir", "-p", "~/.ssh"], stderr=PIPE)
 ret.communicate()
 
 
