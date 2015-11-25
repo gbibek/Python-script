@@ -5,16 +5,16 @@ from subprocess import Popen, PIPE, STDOUT
 HOME_PATH    = os.environ['HOME']
 TARGET_DIR   = '/.ssh'
 TARGET_FILE  = 'id_rsa.pub'
-USER_NAME    = raw_input("user_name = ")
-HOST         = raw_input("host_name = ")
+USER_NAME    = 'bghimire'#raw_input("user_name = ")
+HOST         = 'swat'#raw_input("host_name = ")
 USER_HOST    = USER_NAME + "@" + HOST 
 PATH_SSH_DIR     = HOME_PATH + TARGET_DIR
 PATH_TARGET_FILE = PATH_SSH_DIR +"/" + TARGET_FILE 
 AUTHORIZE_FILE   = PATH_SSH_DIR + "/authorized_keys"
 
 def compare_lines(cmp_str, lines):
-    for line in lines:
-        if cmp_str == line: 
+    for line in lines.splitlines():
+        if cmp_str.split() == line.split(): 
 	    return 1
     return 0
 
@@ -43,17 +43,20 @@ remote_ret = Popen(["ssh", USER_HOST,"cat ~/.ssh/authorized_keys"],stdout=PIPE,s
 remote_lines = remote_ret.stdout.read()  
 remote_ret.communicate()
 
+local_line = local_ret.stdout.read()
+
 if remote_ret.returncode:
-    print "There is no such file and authorized_key file in remote server."
+    print "There is no authorized_key file in remote server."
 else:
     print "There is already authorized_keys file in remote server."
 
-if remote_ret.returncode == 0  and  compare_lines(local_ret.stdout.read(), remote_lines):
+
+if remote_ret.returncode == 0  and  compare_lines(local_line, remote_lines):
     print "The id_pub.rsa is already on the remote authorized_keys file."   
 else:
     print "Appending id_rsa.pub file into authorized_keys file of remote server"
-    ret = Popen(["ssh", USER_HOST,"cat >> ~/.ssh/authorized_keys"],stdin=local_ret.stdout)
-    ret.communicate()
+    ret = Popen(["ssh", USER_HOST,"cat >> ~/.ssh/authorized_keys"],stdin=PIPE)
+    ret.communicate(input=local_line)
  
 local_ret.communicate()
 print "Done !!"
