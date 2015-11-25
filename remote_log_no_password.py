@@ -5,8 +5,8 @@ from subprocess import Popen, PIPE, STDOUT
 HOME_PATH    = os.environ['HOME']
 TARGET_DIR   = '/.ssh'
 TARGET_FILE  = 'id_rsa.pub'
-USER_NAME    = 'bghimire'#raw_input("user_name = ")
-HOST         = 'swat'#raw_input("host_name = ")
+USER_NAME    = raw_input("user_name = ")
+HOST         = raw_input("host_name = ")
 USER_HOST    = USER_NAME + "@" + HOST 
 PATH_SSH_DIR     = HOME_PATH + TARGET_DIR
 PATH_TARGET_FILE = PATH_SSH_DIR +"/" + TARGET_FILE 
@@ -44,6 +44,7 @@ remote_lines = remote_ret.stdout.read()
 remote_ret.communicate()
 
 local_line = local_ret.stdout.read()
+local_ret.communicate()
 
 if remote_ret.returncode:
     print "There is no authorized_key file in remote server."
@@ -58,5 +59,4 @@ else:
     ret = Popen(["ssh", USER_HOST,"cat >> ~/.ssh/authorized_keys"],stdin=PIPE)
     ret.communicate(input=local_line)
  
-local_ret.communicate()
 print "Done !!"
