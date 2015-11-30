@@ -59,10 +59,7 @@ else:
     ret = Popen(["ssh", USER_HOST,"cat >> ~/.ssh/authorized_keys"],stdin=PIPE)
     ret.communicate(input=local_line)
 
-chmod1 = Popen(["ssh", USER_HOST, "chmod 700 ~/.ssh"]) 
-chmod1.communicate()
-
-chmod2 = Popen(["ssh", USER_HOST, "chmod 600 ~/.ssh/authorized_keys"])
-chmod2.communicate()
+chmod = Popen(["ssh", USER_HOST, "chmod 700 ~/.ssh && chmod 600 ~/.ssh/authorized_keys"]) 
+chmod.communicate()
 
 print "Done !!"
